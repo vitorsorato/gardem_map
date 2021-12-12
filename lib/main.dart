@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gmaps/directions_model.dart';
 import 'package:flutter_gmaps/directions_repository.dart';
@@ -141,15 +143,28 @@ class _MapScreenState extends State<MapScreen> {
               ),
             ),
           DraggableScrollableSheet(
+            maxChildSize: 0.8,
+            minChildSize: 0.2,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(
-                color: Colors.blue[100],
-                child: ListView.builder(
-                  controller: scrollController,
-                  itemCount: 25,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(title: Text('Item $index'));
-                  },
+                //color: Colors.blue[100],
+                child: ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 40.0, sigmaY: 40.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white.withOpacity(0.06),
+                      ),
+                      child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: 25,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(title: Text('Item $index'));
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               );
             },
